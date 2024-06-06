@@ -70,6 +70,9 @@ export default function Home() {
         </div>
         <div className="col-span-6 border-r-[0.5px] border-l-[1px] border border-gray-500">
           <FeedCard/>
+          <FeedCard/>
+          <FeedCard/>
+          <FeedCard/>
         </div>
         <div className="col-span-3"></div>
       </div>
