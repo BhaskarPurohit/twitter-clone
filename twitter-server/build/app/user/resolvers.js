@@ -8,11 +8,31 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
+const axios_1 = __importDefault(require("axios"));
+const client_1 = require("@prisma/client");
 const queries = {
     verifyGoogleToken: (parent_1, _a) => __awaiter(void 0, [parent_1, _a], void 0, function* (parent, { token }) {
-        return token;
+        const googleToken = token;
+        //generate a new URL
+        const googleOAuthURL = new URL('https://oauth2.googleapis.com/tokeninfo');
+        googleOAuthURL.searchParams.set('id_token', googleToken);
+        //making api call to google
+        const { data } = yield axios_1.default.get(googleOAuthURL.toString(), {
+            responseType: 'json'
+        });
+        // return token
+        // console.log(data);
+        //check if the user exists already
+        const prismaClient = new client_1.PrismaClient();
+        const user = yield prismaClient.user.findUnique({
+            where: { email: data.email }
+        });
+        return 'ok';
     })
 };
 exports.resolvers = { queries };
