@@ -32,6 +32,17 @@ const queries = {
         const user = yield prismaClient.user.findUnique({
             where: { email: data.email }
         });
+        //if there is no user, create a user
+        if (!user) {
+            yield prismaClient.user.create({
+                data: {
+                    email: data.email,
+                    firstName: data.given_name,
+                    lastName: data.family_name,
+                    profileImageURL: data.picture
+                }
+            });
+        }
         return 'ok';
     })
 };
