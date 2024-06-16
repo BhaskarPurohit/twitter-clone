@@ -9,6 +9,7 @@ import FeedCard from "@/components/FeedCard";
 import { SlOptions } from "react-icons/sl";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useCallback } from "react";
+import toast from "react-hot-toast"
 const inter = Inter({ subsets: ["latin"] })
 
 interface TwitterSidbarButton {
@@ -61,7 +62,8 @@ const SideBarMenuItems: TwitterSidbarButton[] = [
 export default function Home() {
 
   const handleLoginWithGoogle = useCallback((cred: CredentialResponse)=>{
-
+    const googleToken = cred.credential
+    if(!googleToken) toast.error('google token not found')
   },[])
 
   return (
