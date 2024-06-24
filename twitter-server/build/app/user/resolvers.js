@@ -8,48 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
-const axios_1 = __importDefault(require("axios"));
-const client_1 = require("@prisma/client");
-const jwt_1 = __importDefault(require("../../services/jwt"));
 const queries = {
     verifyGoogleToken: (parent_1, _a) => __awaiter(void 0, [parent_1, _a], void 0, function* (parent, { token }) {
-        var _b, _c;
-        const googleToken = token;
-        //generate a new URL
-        const googleOAuthURL = new URL('https://oauth2.googleapis.com/tokeninfo');
-        googleOAuthURL.searchParams.set('id_token', googleToken);
-        //making api call to google
-        const { data } = yield axios_1.default.get(googleOAuthURL.toString(), {
-            responseType: 'json'
-        });
-        // return token
-        // console.log(data);
-        //check if the user exists already
-        const prismaClient = new client_1.PrismaClient();
-        const user = yield prismaClient.user.findUnique({
-            where: { email: data.email }
-        });
-        //if there is no user, create a user
-        if (!user) {
-            yield prismaClient.user.create({
-                data: {
-                    email: (_b = data.email) !== null && _b !== void 0 ? _b : "",
-                    firstName: (_c = data.given_name) !== null && _c !== void 0 ? _c : "",
-                    lastName: data.family_name,
-                    profileImageURL: data.picture
-                }
-            });
-        }
-        const userIndb = yield prismaClient.user.findUnique({ where: { email: data.email } });
-        if (!userIndb)
-            throw new Error('User with email not found');
-        const userToken = jwt_1.default.generateTokenForUser(userIndb);
-        return userToken;
+        return token;
     })
 };
 exports.resolvers = { queries };

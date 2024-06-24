@@ -10,12 +10,16 @@ import { SlOptions } from "react-icons/sl";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useCallback } from "react";
 import toast from "react-hot-toast"
+import { graphql } from "graphql";
+import { GraphQLClient } from "graphql-request";
 const inter = Inter({ subsets: ["latin"] })
 
 interface TwitterSidbarButton {
   title: string;
   icon: React.ReactNode;
 }
+
+// const graphqlClient = new GraphQLClient()
 
 const SideBarMenuItems: TwitterSidbarButton[] = [
   {
@@ -60,11 +64,9 @@ const SideBarMenuItems: TwitterSidbarButton[] = [
   }
 ]
 export default function Home() {
-
   const handleLoginWithGoogle = useCallback((cred: CredentialResponse)=>{
-    const googleToken = cred.credential
-    if(!googleToken) toast.error('google token not found')
-  },[])
+
+  })
 
   return (
     <div className={inter.className}>
@@ -98,10 +100,10 @@ export default function Home() {
           <FeedCard/>
         </div>
         <div className="col-span-3 p-5">
-          <div className="border p-5 bg-slate-700 rounded-lg">
+          <div className=" bg-slate-700 p-5">
             <h1 className="my-2 text-2xl">New to Twitter?</h1>
-          <GoogleLogin onSuccess={ cred => console.log((cred))}
-          />
+            <GoogleLogin onSuccess={(cred)=> console.log(cred)
+            }/>
           </div>
         </div>
       </div>

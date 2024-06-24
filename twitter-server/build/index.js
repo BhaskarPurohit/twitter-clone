@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
-        const app = yield (0, app_1.initialServer)();
-        app.listen(8000, () => console.log("Server started at port 8000"));
+        const app = yield (0, app_1.initServer)();
+        app.listen(8000, () => console.log(`server started at port 8000`));
     });
 }
 init();
