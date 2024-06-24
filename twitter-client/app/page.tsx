@@ -65,8 +65,8 @@ const SideBarMenuItems: TwitterSidbarButton[] = [
 ]
 export default function Home() {
   const handleLoginWithGoogle = useCallback((cred: CredentialResponse)=>{
-
-  })
+    
+  },[])
 
   return (
     <div className={inter.className}>
